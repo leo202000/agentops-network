@@ -1,0 +1,128 @@
+{
+  "agentcoin_registration": {
+    "status": "preparing",
+    "created_at": "2026-02-17T22:20:00+08:00",
+    
+    "wallet": {
+      "status": "needs_manual_creation",
+      "reason": "钱包创建需要用户亲自操作以确保安全",
+      "recommended": "MetaMask",
+      "alternative": [
+        "Coinbase Wallet",
+        "Trust Wallet",
+        "其他 Base 兼容钱包"
+      ],
+      "setup_guide": "https://metamask.io"
+    },
+    
+    "network": {
+      "name": "Base Mainnet",
+      "rpc_url": "https://mainnet.base.org",
+      "chain_id": 8453,
+      "currency_symbol": "ETH",
+      "block_explorer": "https://basescan.org",
+      "config_ready": true
+    },
+    
+    "eth_requirement": {
+      "minimum_usd": 1,
+      "recommended_usd": 5,
+      "purpose": "GAS 费用（注册 + 多次交互）",
+      "acquisition_methods": [
+        {
+          "method": "交易所提现",
+          "platforms": ["Binance", "OKX", "Coinbase"],
+          "network": "BASE (不是 ERC20!)",
+          "time": "10-30 分钟"
+        },
+        {
+          "method": "官方桥接",
+          "url": "https://bridge.base.org",
+          "time": "5-15 分钟"
+        },
+        {
+          "method": "第三方桥接",
+          "urls": [
+            "https://bridge.bungee.exchange",
+            "https://app.across.to",
+            "https://hop.exchange"
+          ],
+          "time": "5-15 分钟"
+        }
+      ]
+    },
+    
+    "x_verification": {
+      "status": "needs_manual_post",
+      "reason": "推文发布需要用户登录 X 账户",
+      "template": "🤖 Registering my AI Agent @AgentCoin!\nVerification Code: [CODE]\n#AgentCoin #AI #Base #Crypto",
+      "requirements": [
+        "X 账户已登录",
+        "账户非保护状态（推文公开）",
+        "包含正确的验证代码"
+      ]
+    },
+    
+    "registration_url": "https://agentcoin.site/bind-x.html",
+    
+    "manual_steps_required": [
+      {
+        "step": 1,
+        "action": "安装 MetaMask",
+        "url": "https://metamask.io",
+        "time": "2 分钟"
+      },
+      {
+        "step": 2,
+        "action": "创建钱包并备份助记词",
+        "warning": "助记词必须安全备份，不要分享给任何人",
+        "time": "3 分钟"
+      },
+      {
+        "step": 3,
+        "action": "添加 Base 网络到 MetaMask",
+        "config": "已在上文提供",
+        "time": "1 分钟"
+      },
+      {
+        "step": 4,
+        "action": "获取 ETH 到 Base 链",
+        "amount": "$5-10 USD",
+        "time": "10-30 分钟"
+      },
+      {
+        "step": 5,
+        "action": "访问 AgentCoin 注册页面",
+        "url": "https://agentcoin.site/bind-x.html",
+        "time": "1 分钟"
+      },
+      {
+        "step": 6,
+        "action": "连接钱包并获取验证代码",
+        "time": "1 分钟"
+      },
+      {
+        "step": 7,
+        "action": "发布验证推文",
+        "template": "已在上文提供",
+        "time": "2 分钟"
+      },
+      {
+        "step": 8,
+        "action": "验证推文并完成链上注册",
+        "gas_cost": "~$0.01-0.05",
+        "time": "2-5 分钟"
+      }
+    ],
+    
+    "total_estimated_time": "15-30 分钟（不包括获取 ETH 的等待时间）",
+    
+    "security_notes": [
+      "永远不要分享私钥或助记词",
+      "确保访问正确的官方网站",
+      "检查 HTTPS 连接",
+      "验证推文设为公开",
+      "GAS 费用应该很低（<$0.05）"
+    ]
+  }
+}
