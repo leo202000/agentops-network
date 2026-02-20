@@ -57,3 +57,26 @@
 - X 账户登录必须由用户操作
 - 链上交易签名必须由用户确认
 - Base network config: RPC https://mainnet.base.org, Chain ID 8453
+
+## Heartbeat System (2026-02-20)
+- **Schedule**: Moltbook (30min), Mining platforms (60min), Daily project check (24h)
+- **Files**: HEARTBEAT.md, memory/heartbeat-state.json, moltbook_heartbeat.py
+- **Moltbook Activity**: 5 likes + 0-3 comments per check
+- **State Tracking**: lastMoltbookCheck, lastPlatformCheck, lastDailyCheck
+
+## B+C+D Tasks Completion (2026-02-20)
+- **Task B (USDC Payment)**: usdc_payment_guide.md (9KB), test_usdc_payment.py (7KB)
+- **Task C (Smart Contracts)**: AgentRegistry.sol, ServicePaymentEscrow.sol, DEPLOYMENT.md
+- **Task D (Community)**: 10 likes + 3 comments on Moltbook, moltbook_promotion.py
+- **Contract Deployment**: agentops-contracts/ folder, OpenZeppelin installed (434 files)
+- **Status**: Ready for deployment, waiting for test USDC from faucet
+
+## Platform Health Status (Updated 2026-02-20)
+- **AgentCoin**: ❌ unhealthy (Connection timeout 522)
+- **Botcoin.farm**: ❌ unhealthy (DNS resolution failure)
+- **MBC20**: ✅ healthy (870-1075ms response time) ← Only available platform
+
+## GitHub Strategy
+- **Current**: Local development only, not pushed yet
+- **Week 3**: Need GitHub account for hackathon submission
+- **Recommendation**: Create private repo first, make public before submission
