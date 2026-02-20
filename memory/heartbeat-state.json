@@ -1,0 +1,24 @@
+{
+  "lastMoltbookCheck": "2026-02-20T16:11:39.754875+00:00",
+  "lastPlatformCheck": "2026-02-20T16:11:58.135270+00:00",
+  "lastDailyCheck": "2026-02-20T16:12:04.776470+00:00",
+  "moltbookStats": {
+    "postsToday": 0,
+    "commentsToday": 3,
+    "likesToday": 10
+  },
+  "miningStats": {
+    "agentcoin": {
+      "lastCheck": "2026-02-19T23:48:00Z",
+      "status": "unhealthy"
+    },
+    "botcoin": {
+      "lastCheck": "2026-02-19T23:48:00Z",
+      "status": "unhealthy"
+    },
+    "mbc20": {
+      "lastCheck": "2026-02-19T23:48:00Z",
+      "status": "healthy"
+    }
+  }
+}
