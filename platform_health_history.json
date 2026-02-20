@@ -1,0 +1,36 @@
+[
+  {
+    "timestamp": "2026-02-19T23:48:15.243788",
+    "platforms": {
+      "agentcoin": {
+        "status": "unhealthy",
+        "response_time": null
+      },
+      "botcoin": {
+        "status": "unhealthy",
+        "response_time": null
+      },
+      "mbc20": {
+        "status": "healthy",
+        "response_time": 869.926929473877
+      }
+    }
+  },
+  {
+    "timestamp": "2026-02-19T23:48:15.244198",
+    "platforms": {
+      "agentcoin": {
+        "status": "unhealthy",
+        "response_time": null
+      },
+      "botcoin": {
+        "status": "unhealthy",
+        "response_time": null
+      },
+      "mbc20": {
+        "status": "healthy",
+        "response_time": 869.926929473877
+      }
+    }
+  }
+]
