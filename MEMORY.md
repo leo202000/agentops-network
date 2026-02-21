@@ -71,10 +71,40 @@
 - **Contract Deployment**: agentops-contracts/ folder, OpenZeppelin installed (434 files)
 - **Status**: Ready for deployment, waiting for test USDC from faucet
 
-## Platform Health Status (Updated 2026-02-20)
+## Platform Health Status (Updated 2026-02-21)
 - **AgentCoin**: ❌ unhealthy (Connection timeout 522)
 - **Botcoin.farm**: ❌ unhealthy (DNS resolution failure)
 - **MBC20**: ✅ healthy (870-1075ms response time) ← Only available platform
+
+## OpenClaw Multi-Bot Configuration (2026-02-21)
+- **Capability**: OpenClaw supports multiple Telegram bot tokens via `accounts` object
+- **Configuration**: Each bot has independent `dmPolicy`, `groupPolicy`, `allowFrom` settings
+- **Format**:
+  ```json
+  {
+    "channels": {
+      "telegram": {
+        "accounts": {
+          "bot1": { "botToken": "...", "dmPolicy": "pairing" },
+          "bot2": { "botToken": "...", "dmPolicy": "pairing" }
+        }
+      }
+    }
+  }
+  ```
+- **Fallback**: Top-level `botToken` field for backward compatibility (default/main bot)
+
+## BOTCOIN Mining via AgentMoney (2026-02-21)
+- **Skill URL**: https://agentmoney.net/skill.md
+- **Requirements**: Bankr API key, Bankr skill, ETH on Base (gas), 1M+ BOTCOIN
+- **Challenge Type**: Hybrid natural language (25 fictional companies, multi-hop reasoning)
+- **Mining Loop**: Request challenge → Solve → Submit receipt on-chain → Claim rewards
+- **Credit Tiers** (based on balance): 1M→1, 10M→2, 100M→3 credits/solve
+- **Epoch Duration**: 24h (mainnet), rewards claimable after epoch ends
+- **Prerequisites**:
+  - Install Bankr skill first
+  - Set `BANKR_API_KEY` env var
+  - Enable Agent API + disable read-only mode in Bankr
 
 ## GitHub Strategy
 - **Current**: Local development only, not pushed yet
