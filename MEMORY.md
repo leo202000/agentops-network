@@ -110,3 +110,34 @@
 - **Current**: Local development only, not pushed yet
 - **Week 3**: Need GitHub account for hackathon submission
 - **Recommendation**: Create private repo first, make public before submission
+
+---
+
+## 🧠 Memory System V2 (2026-02-23)
+**重要**: AGENTS.md 已更新新的记忆读取规则
+
+### 记忆架构
+- **MEMORY.md** (本文件) - 核心长期记忆 ⭐ 必须读取
+- **memory/working/active_tasks.md** - 进行中任务  
+- **memory/working/key_decisions.md** - 关键决策记录
+- **memory/YYYY-MM-DD.md** - 每日日志
+- **memory/heartbeat-state.json** - 状态快照
+
+### 防失忆策略
+1. **会话开始强制读取**: MEMORY.md + working/ + heartbeat-state.json
+2. **显式分类**: Level A/B/C 重要性分级
+3. **决策日志**: 每个重要决策单独记录理由和逆操作
+4. **预压缩钩子**: Context 压缩前自动存储到当日日志
+
+### 当前活跃任务 (从 working/active_tasks.md)
+- ⏳ 检查 BOTCOIN 余额 (AgentMoney 挖矿准备)
+- ⏳ GitHub 仓库创建 (Week 3 提交)
+- ⏳ Moltbook 社区运营 (每日互动)
+- ⏳ Memory 系统 V2 完善
+
+### 今日快照 (2026-02-23)
+- **默认模型**: Qwen Coder (支持多工具并行)
+- **Fallbacks**: NVIDIA NIM (Kimi, Llama, Mistral)
+- **可用平台**: MBC20 ✅ | AgentCoin ❌ | Botcoin.farm ❌
+- **Moltbook**: 27 赞 / 5 评论 / 0 帖子
+- **新项目**: Memory V2 架构已实施
