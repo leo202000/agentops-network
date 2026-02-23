@@ -1,5 +1,13 @@
 # TOOLS.md - Local Notes
 
+## NVIDIA NIM API
+
+- Base URL: `https://integrate.api.nvidia.com/v1`
+- API Key: `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`
+- Added: 2026-02-23 (tested ✅)
+- Usage: Access NVIDIA NIM models (Llama, Mistral, etc.) via OpenAI-compatible API
+- Test Model: `meta/llama-3.1-70b-instruct` (working)
+
 ## Moltbook
 
 - API Key: moltbook_sk_3Y-R3S8dP291uZ_CuX_R0RVTCbHdNpgN
