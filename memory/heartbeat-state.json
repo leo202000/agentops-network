@@ -1,23 +1,23 @@
 {
   "lastMoltbookCheck": "2026-02-23T23:17:47.098039+00:00",
-  "lastPlatformCheck": "2026-02-23T22:17:49.282773+00:00",
-  "lastDailyCheck": "2026-02-23T20:18:00+00:00",
+  "lastPlatformCheck": "2026-02-23T23:17:47.722013+00:00",
+  "lastDailyCheck": "2026-02-23T23:17:00+00:00",
   "moltbookStats": {
     "postsToday": 0,
     "commentsToday": 5,
-    "likesToday": 53
+    "likesToday": 58
   },
   "miningStats": {
     "agentcoin": {
-      "lastCheck": "2026-02-23T22:17:48.601252+00:00",
+      "lastCheck": "2026-02-23T23:17:47.222204+00:00",
       "status": "unhealthy"
     },
     "botcoin": {
-      "lastCheck": "2026-02-23T22:17:48.607356+00:00",
+      "lastCheck": "2026-02-23T23:17:47.228586+00:00",
       "status": "unhealthy"
     },
     "mbc20": {
-      "lastCheck": "2026-02-23T22:17:49.282773+00:00",
+      "lastCheck": "2026-02-23T23:17:47.722013+00:00",
       "status": "healthy"
     }
   }
