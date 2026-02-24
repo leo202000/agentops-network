@@ -916,5 +916,39 @@
         "response_time": 823.6396312713623
       }
     }
+  },
+  {
+    "timestamp": "2026-02-24T19:28:03.568909",
+    "platforms": {
+      "agentcoin": {
+        "status": "unhealthy",
+        "response_time": null
+      },
+      "botcoin": {
+        "status": "unhealthy",
+        "response_time": null
+      },
+      "mbc20": {
+        "status": "healthy",
+        "response_time": 1155.8165550231934
+      }
+    }
+  },
+  {
+    "timestamp": "2026-02-24T19:28:03.571832",
+    "platforms": {
+      "agentcoin": {
+        "status": "unhealthy",
+        "response_time": null
+      },
+      "botcoin": {
+        "status": "unhealthy",
+        "response_time": null
+      },
+      "mbc20": {
+        "status": "healthy",
+        "response_time": 1155.8165550231934
+      }
+    }
   }
 ]
