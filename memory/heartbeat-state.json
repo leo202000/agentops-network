@@ -1,6 +1,6 @@
 {
   "lastMoltbookCheck": "2026-02-26T21:47:14.486400+00:00",
-  "lastPlatformCheck": "2026-02-26T21:14:10.234258+00:00",
+  "lastPlatformCheck": "2026-02-26T22:15:40.619071+00:00",
   "lastDailyCheck": "2026-02-26T21:14:10.234258+00:00",
   "moltbookStats": {
     "postsToday": 0,
@@ -17,7 +17,7 @@
       "status": "unhealthy"
     },
     "mbc20": {
-      "lastCheck": "2026-02-26T20:14:00.654782+00:00",
+      "lastCheck": "2026-02-26T22:15:40.619071+00:00",
       "status": "healthy"
     }
   }
