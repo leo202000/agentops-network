@@ -1,39 +1,5 @@
 [
   {
-    "timestamp": "2026-02-23T07:57:25.355592",
-    "platforms": {
-      "agentcoin": {
-        "status": "unhealthy",
-        "response_time": null
-      },
-      "botcoin": {
-        "status": "unhealthy",
-        "response_time": null
-      },
-      "mbc20": {
-        "status": "healthy",
-        "response_time": 650.6853103637695
-      }
-    }
-  },
-  {
-    "timestamp": "2026-02-23T07:57:25.356554",
-    "platforms": {
-      "agentcoin": {
-        "status": "unhealthy",
-        "response_time": null
-      },
-      "botcoin": {
-        "status": "unhealthy",
-        "response_time": null
-      },
-      "mbc20": {
-        "status": "healthy",
-        "response_time": 650.6853103637695
-      }
-    }
-  },
-  {
     "timestamp": "2026-02-23T09:28:32.203172",
     "platforms": {
       "agentcoin": {
@@ -1696,6 +1662,40 @@
       "mbc20": {
         "status": "healthy",
         "response_time": 1293.2534217834473
+      }
+    }
+  },
+  {
+    "timestamp": "2026-02-27T08:29:55.741247",
+    "platforms": {
+      "agentcoin": {
+        "status": "unhealthy",
+        "response_time": null
+      },
+      "botcoin": {
+        "status": "unhealthy",
+        "response_time": null
+      },
+      "mbc20": {
+        "status": "healthy",
+        "response_time": 1397.8748321533203
+      }
+    }
+  },
+  {
+    "timestamp": "2026-02-27T08:29:55.744940",
+    "platforms": {
+      "agentcoin": {
+        "status": "unhealthy",
+        "response_time": null
+      },
+      "botcoin": {
+        "status": "unhealthy",
+        "response_time": null
+      },
+      "mbc20": {
+        "status": "healthy",
+        "response_time": 1397.8748321533203
       }
     }
   }
