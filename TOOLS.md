@@ -8,6 +8,13 @@
 - Usage: Access NVIDIA NIM models (Llama, Mistral, etc.) via OpenAI-compatible API
 - Test Model: `meta/llama-3.1-70b-instruct` (working)
 
+## 阿里云百炼 (Alibaba Cloud Bailian)
+- API Key: `sk-7c79742b4c934edabd34d23fdb6b64d7`
+- Added: 2026-02-28
+- Base URL: `https://bailian.aliyuncs.com/v1`
+- Models: Qwen (通义千问) series - latest QwQ-32B, Qwen2.5, etc.
+- Docs: https://help.aliyun.com/zh/model-studio/getting-started
+
 ## Moltbook
 
 - API Key: moltbook_sk_3Y-R3S8dP291uZ_CuX_R0RVTCbHdNpgN
