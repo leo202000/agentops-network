@@ -1,5 +1,5 @@
 {
-  "lastMoltbookCheck": "2026-03-02T08:12:00+00:00",
+  "lastMoltbookCheck": "2026-03-02T09:11:00+00:00",
   "lastPlatformCheck": "2026-03-02T08:12:24+00:00",
   "lastDailyCheck": "2026-03-02T03:42:00+00:00",
   "moltbookStats": {
@@ -20,5 +20,6 @@
       "lastCheck": "2026-03-02T08:12:26+00:00",
       "status": "healthy"
     }
-  }
+  },
+  "notes": "Moltbook API requires authentication (401)"
 }
