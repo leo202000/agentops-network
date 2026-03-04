@@ -1,0 +1,25 @@
+# BNB Chain MCP - contains private key
+mcp.json
+
+# Environment variables - may contain secrets
+.env
+.env.local
+.env.*.local
+
+# Node modules
+node_modules/
+
+# Package lock (optional - keep if you want consistent installs)
+# package-lock.json
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

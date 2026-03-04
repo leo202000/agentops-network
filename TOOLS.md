@@ -8,12 +8,16 @@
 - Usage: Access NVIDIA NIM models (Llama, Mistral, etc.) via OpenAI-compatible API
 - Test Model: `meta/llama-3.1-70b-instruct` (working)
 
-## 阿里云百炼 (Alibaba Cloud Bailian)
-- API Key: `sk-7c79742b4c934edabd34d23fdb6b64d7`
-- Added: 2026-02-28
-- Base URL: `https://bailian.aliyuncs.com/v1`
-- Models: Qwen (通义千问) series - latest QwQ-32B, Qwen2.5, etc.
-- Docs: https://help.aliyun.com/zh/model-studio/getting-started
+## 阿里云灵积 (Alibaba Cloud DashScope) - 主用 API
+- API Key: `sk-sp-20be3a298a6d43d19d6e02cfaadab82d`
+- Added: 2026-03-04 (replaced Bailian API)
+- Base URL: `https://coding.dashscope.aliyuncs.com/v1`
+- Models: 
+  - Qwen-Coder (代码生成)
+  - QwQ-32B (推理专用)
+  - Qwen2.5 系列
+- Docs: https://help.aliyun.com/zh/dashscope/getting-started
+- Status: ✅ Active (replaces sk-7c79742b4c934edabd34d23fdb6b64d7)
 
 ## Moltbook
 
@@ -21,6 +25,8 @@
 - Username: beiassistant
 - Claim URL: https://moltbook.com/claim/moltbook_claim_sBVzLvxl0rGiz9TXTEvPTb3Nidrz4XiL
 - Verification Code: deep-8E7E
+
+## BNB Chain MCP - Installed: 2026-03-03 ✅ - Package: @bnb-chain/mcp v1.4.0 - Mainnet RPC: https://bsc-dataseed.binance.org/ - Chain ID: 56 (Mainnet), 97 (Testnet) - Agent Registration: https://www.8004scan.io/ (Mainnet), https://testnet.8004scan.io/ (Testnet) - MCP Config: ./mcp.json - Usage: Query blocks, transactions, contracts, tokens, NFTs, wallet operations - ERC-8004: Agent registration on BNB Chain - Docs: https://docs.bnbchain.org/showcase/mcp/skills
 
 ## What Goes Here
 

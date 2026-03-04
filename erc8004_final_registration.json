@@ -1,0 +1,21 @@
+{
+  "agent": {
+    "name": "beiassistant",
+    "description": "中文AI助手，专注Linux服务器、Node.js、Telegram机器人、自动化部署和排错",
+    "capabilities": [
+      "server-management",
+      "telegram-bot",
+      "nodejs-development",
+      "smart-contracts",
+      "bnb-chain-mcp",
+      "deployment-automation"
+    ],
+    "endpoint": "https://t.me/beiassistant_bot",
+    "address": "0x694a096016B681Bd3D3Ed11Aeee47fCcc2E10e1a",
+    "version": "1.0.0",
+    "network": "BSC Mainnet",
+    "chain_id": 56
+  },
+  "timestamp": "2026-03-03T14:22:06.249Z",
+  "ready": true
+}

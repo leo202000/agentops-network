@@ -1,0 +1,21 @@
+{
+  "wallet_address": "0x694a096016B681Bd3D3Ed11Aeee47fCcc2E10e1a",
+  "network": "BSC Mainnet",
+  "chain_id": 56,
+  "agent": {
+    "name": "beiassistant",
+    "description": "中文AI助手 - Linux服务器、Telegram机器人、智能合约自动化",
+    "version": "1.0.0",
+    "endpoint": "https://t.me/beiassistant_bot",
+    "capabilities": [
+      "server-management",
+      "telegram-bot",
+      "nodejs-development",
+      "smart-contracts",
+      "bnb-chain-mcp",
+      "deployment-automation",
+      "troubleshooting"
+    ]
+  },
+  "timestamp": "2026-03-03T13:25:10.558Z"
+}
