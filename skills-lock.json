@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "skills": {
+    "agent-reach": {
+      "source": "Panniantong/Agent-Reach",
+      "sourceType": "github",
+      "computedHash": "cd8f67860c10a0f814b2900d56f81472318036a437b0122cf27faf1300d281a8"
+    },
+    "bankr": {
+      "source": "BankrBot/openclaw-skills",
+      "sourceType": "github",
+      "computedHash": "72daa609f74ce0f2407abd42d15b2e4f9686ff8394fe65349827eacaa84b542e"
+    },
+    "bnbchain-mcp": {
+      "source": "bnb-chain/bnbchain-skills",
+      "sourceType": "github",
+      "computedHash": "16581ac841e65b9f7a64de69883a28698335729f9692868fc260154e737c03f7"
+    },
+    "okx-dex-market": {
+      "source": "okx/onchainos-skills",
+      "sourceType": "github",
+      "computedHash": "ef002523d36aac6a9acafa64d1e005b8aea9adcc38f1ad1bfd3db7fe4a7eb414"
+    },
+    "okx-dex-swap": {
+      "source": "okx/onchainos-skills",
+      "sourceType": "github",
+      "computedHash": "6541e6681e75fe4e20b89914a19f67800ae6c1a6d42bd65de70f0f7eb287fc5c"
+    },
+    "okx-dex-token": {
+      "source": "okx/onchainos-skills",
+      "sourceType": "github",
+      "computedHash": "3e658ee18f9f5bbae524484f4f45506b992d6cd8b7dc25a29a241e02b0201667"
+    },
+    "okx-onchain-gateway": {
+      "source": "okx/onchainos-skills",
+      "sourceType": "github",
+      "computedHash": "4b68d52143388f7aa427ebbdcb44c55eae41925ecb49b8d70097abad36c82adf"
+    },
+    "okx-wallet-portfolio": {
+      "source": "okx/onchainos-skills",
+      "sourceType": "github",
+      "computedHash": "f3214d7f3535004e62a3125cddab17d4dcef0bcc1c6f9527c8171ad5e307b345"
+    }
+  }
+}
