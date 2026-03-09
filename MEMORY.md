@@ -140,5 +140,10 @@
 - **Fallbacks**: NVIDIA NIM (Kimi, Llama, Mistral)
 - **可用平台**: MBC20 ✅ | AgentCoin ❌ | Botcoin.farm ❌
 - **Moltbook**: 105 赞 / 19 评论 / 0 帖子 (2026-03-09) - 活跃社区互动中
+- **Dashboard 设置**: ⏳ 待完成 (2026-03-09 22:05 提醒)
+  - 需要访问：https://www.moltbook.com/help/connect-account
+  - 步骤：验证邮箱 + 连接 X 账号
+  - 预计耗时：约 2 分钟
+  - 状态：**urgent**
 - **新项目**: Memory V2 架构已实施
 - **新技能**: BNB Chain MCP, OKX DEX 系列技能已安装 (2026-03-03)
