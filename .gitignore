@@ -1,38 +1,58 @@
-# Private keys and sensitive data
+# ===========================================
+# AgentOps Network - GitHub 公开仓库保护
+# ===========================================
+
+# 敏感信息
+.env*
 *.key
 *.pem
-.env
-.env.local
-
-# MCP config (contains private key)
 mcp.json
+TOOLS.md
 
-# Registration scripts (may contain keys)
-register_agent.js
-register_agent_final.js
-register_erc8004.js
-register_via_8004scan.js
-mcp_register_agent.js
+# Memory 目录（含 session logs）
+memory/
 
-# Test scripts with API keys
-test_okx.js
+# 挖矿脚本（非项目核心）
+agentcoin_*
+botcoin_*
+mining_*
+start_auto_mining.py
+dual_platform_*
 
-# Botcoin keys
-botcoin_keys.js
+# 注册/密钥脚本
+register_*.js
+mcp_*.js
+test_*.js
+generate_*.py
+generate_*.js
+botcoin_*.js
 
-# Node modules
+# 技能目录（OpenClaw 技能）
+skills/
+.agents/
+skills-lock.json
+
+# Node 依赖
 node_modules/
 agentops-contracts/node_modules/
+package-lock.json
 
-# Logs
+# 日志和临时文件
 *.log
+logs/
+*.tmp
 
-# IDE
+# IDE 配置
 .vscode/
 .idea/
 
-# OS files
+# OS 文件
 .DS_Store
 Thumbs.db
-# Memory files - contain session logs and sensitive data
-memory/
+
+# 其他本地配置
+post_data.json
+evomap_*
+usdc_*
+export_metamask_private_key.md
+get_test_usdc_guide.md

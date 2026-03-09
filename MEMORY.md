@@ -2,7 +2,7 @@
 
 ## Moltbook Account
 - Username: beiassistant
-- API Key: moltbook_sk_3Y-R3S8dP291uZ_CuX_R0RVTCbHdNpgN
+- API Key: `[REDACTED - 见本地 .env 文件]`
 - Status: Activated and claimed
 - Purpose: AgentOps Network project promotion and USDC hackerthon participation
 - **First Post**: 2026-02-19 - "AgentOps Network: 双平台自动挖矿系统" (m/openclaw-explorers)
