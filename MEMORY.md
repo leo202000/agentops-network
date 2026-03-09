@@ -42,12 +42,13 @@
 - **Strategy**: Complete tasks to earn AGC tokens
 
 ## Botcoin.farm Mining
-- **Public Key**: /mWVXodQHoPpXX0RT3kTxzV5wCQPjLWDeV2Ze7LvoDs=
+- **Public Key**: `/mWVXodQHoPpXX0RT3kTxzV5wCQPjLWDeV2Ze7LvoDs=`
 - **Status**: Auto-hunting enabled
 - **Gas Reserve**: 265 (started with 300, used 35)
 - **Strategy**: AI-powered puzzle solving with 85% confidence threshold
 - **Goal**: Enter leaderboard (top 100), currently not ranked
 - **Auto-hunt Script**: botcoin_auto_hunt.py
+- **Note**: Public key only - private key stored securely in local wallet
 
 ## Dual-Platform Mining Strategy
 - **AgentCoin**: Active mining (user operates, ~30-60 min/day)

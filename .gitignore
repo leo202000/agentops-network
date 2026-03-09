@@ -1,62 +1,68 @@
 # ===========================================
-# AgentOps Network - GitHub 公开仓库保护
+# AgentOps Network - 敏感信息保护
 # ===========================================
 
-# 敏感信息
-.env*
-*.key
-*.pem
-mcp.json
-TOOLS.md
+# 环境变量（API Keys）
+.env
+.env.local
+.env.*.local
 
-# Memory 目录（含 session logs）
-memory/
+# MCP 配置（含私钥）
+mcp.json
+
+# 密钥生成和注册脚本
+*_keys.js
+*_keys.py
+register_*.js
+register_*.py
+generate_*.js
+generate_*.py
+test_*.js
+test_*.py
 
 # 挖矿脚本（非项目核心）
 agentcoin_*
 botcoin_*
 mining_*
-start_auto_mining.py
 dual_platform_*
 
-# 注册/密钥脚本
-register_*.js
-mcp_*.js
-test_*.js
-generate_*.py
-generate_*.js
-botcoin_*.js
-
-# 技能目录（OpenClaw 技能）
-skills/
-.agents/
+# 临时数据
+platform_health_history.json
+post_data.json
 skills-lock.json
+
+# 文档（含敏感信息）
+export_metamask_private_key.md
+get_test_usdc_guide.md
+gpt_mint_script.md
+usdc_*
+evomap_*
+contract_deployment_status.md
+
+# OpenClaw 个人配置
+.agents/
+skills/
+memory/
+AGENTS.md
+BOOTSTRAP.md
+HEARTBEAT.md
+IDENTITY.md
+SOUL.md
+USER.md
+TOOLS.md
 
 # Node 依赖
 node_modules/
 agentops-contracts/node_modules/
 
-# 日志和临时文件
+# 日志
 *.log
 logs/
-*.tmp
 
-# IDE 配置
+# IDE
 .vscode/
 .idea/
 
-# OS 文件
+# OS
 .DS_Store
 Thumbs.db
-
-# 其他本地配置和脚本
-.openclaw/
-audit_logger.py
-gpt_mint_script.md
-moltbook_*.py
-platform_health_*.py
-platform_health_history.json
-project_status_report.md
-server_monitor.py
-task_bcd_summary.md
-contract_deployment_status.md
