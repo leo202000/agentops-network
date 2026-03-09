@@ -34,3 +34,5 @@ agentops-contracts/node_modules/
 # OS files
 .DS_Store
 Thumbs.db
+# Memory files - contain session logs and sensitive data
+memory/
