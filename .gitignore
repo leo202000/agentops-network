@@ -43,11 +43,11 @@ contract_deployment_status.md
 .agents/
 skills/
 memory/
-AGENTS.md
 BOOTSTRAP.md
 HEARTBEAT.md
 IDENTITY.md
 SOUL.md
+# AGENTS.md 现在需要版本控制（安全策略更新）
 USER.md
 TOOLS.md
 
