@@ -1,20 +1,31 @@
-# BNB Chain MCP - contains private key
-mcp.json
-
-# Environment variables - may contain secrets
+# Private keys and sensitive data
+*.key
+*.pem
 .env
 .env.local
-.env.*.local
+
+# MCP config (contains private key)
+mcp.json
+
+# Registration scripts (may contain keys)
+register_agent.js
+register_agent_final.js
+register_erc8004.js
+register_via_8004scan.js
+mcp_register_agent.js
+
+# Test scripts with API keys
+test_okx.js
+
+# Botcoin keys
+botcoin_keys.js
 
 # Node modules
 node_modules/
-
-# Package lock (optional - keep if you want consistent installs)
-# package-lock.json
+agentops-contracts/node_modules/
 
 # Logs
 *.log
-logs/
 
 # IDE
 .vscode/
