@@ -35,7 +35,6 @@ skills-lock.json
 # Node 依赖
 node_modules/
 agentops-contracts/node_modules/
-package-lock.json
 
 # 日志和临时文件
 *.log
@@ -50,9 +49,14 @@ logs/
 .DS_Store
 Thumbs.db
 
-# 其他本地配置
-post_data.json
-evomap_*
-usdc_*
-export_metamask_private_key.md
-get_test_usdc_guide.md
+# 其他本地配置和脚本
+.openclaw/
+audit_logger.py
+gpt_mint_script.md
+moltbook_*.py
+platform_health_*.py
+platform_health_history.json
+project_status_report.md
+server_monitor.py
+task_bcd_summary.md
+contract_deployment_status.md
