@@ -41,13 +41,16 @@ contract_deployment_status.md
 
 # OpenClaw 个人配置
 .agents/
-skills/
 memory/
 BOOTSTRAP.md
 HEARTBEAT.md
 IDENTITY.md
 SOUL.md
 # AGENTS.md 现在需要版本控制（安全策略更新）
+
+# 技能（排除个人技能，但允许项目技能）
+skills/
+!skills/safe-evolving-agent/
 USER.md
 TOOLS.md
 
