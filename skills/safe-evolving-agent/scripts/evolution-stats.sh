@@ -35,8 +35,8 @@ echo "总数：$OBS_COUNT"
 # 按类型统计
 echo ""
 echo "按类型分布:"
-grep -rh "**类型**:" "$EVOLUTION_DIR/observations/" 2>/dev/null | \
-    sed 's/.*类型**: //' | sort | uniq -c | sort -rn | head -5
+grep -rh "\*\*类型\*\*:" "$EVOLUTION_DIR/observations/" 2>/dev/null | \
+    sed 's/.*\*\*类型\*\*: //' | sort | uniq -c | sort -rn | head -5
 
 # 按分类统计
 echo ""

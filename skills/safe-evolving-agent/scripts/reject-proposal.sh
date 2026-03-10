@@ -8,7 +8,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-EVOLUTION_DIR="$SCRIPT_DIR/../../.evolution"
+EVOLUTION_DIR="$(dirname "$SCRIPT_DIR")/.evolution"
 
 # 参数检查
 if [ $# -lt 1 ]; then
