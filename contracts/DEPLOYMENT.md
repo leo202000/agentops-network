@@ -80,10 +80,15 @@ export default config;
 ### 4. 创建 .env 文件
 
 ```bash
-# .env
-PRIVATE_KEY=0x你的私钥
-BASESCAN_API_KEY=你的 Basescan API key
+# .env (不要提交到 git!)
+PRIVATE_KEY=0x[YOUR_PRIVATE_KEY_HERE]
+BASESCAN_API_KEY=[YOUR_BASESCAN_API_KEY]
 ```
+
+⚠️ **安全提醒**: 
+- 私钥永远不要提交到 git
+- 使用 `.gitignore` 保护 `.env` 文件
+- 建议使用硬件钱包或密钥管理器
 
 ---
 
