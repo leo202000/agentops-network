@@ -8,7 +8,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-EVOLUTION_DIR="$SCRIPT_DIR/../../.evolution"
+EVOLUTION_DIR="$(dirname "$SCRIPT_DIR")/.evolution"
 
 # 参数检查
 if [ $# -lt 1 ]; then
@@ -28,7 +28,7 @@ echo "🔍 搜索模式：$PATTERN"
 echo "阈值：$THRESHOLD 次"
 echo ""
 
-MATCHES=$(grep -rl "$PATTERN" "$EVOLUTION_DIR/observations/" 2>/dev/null | wc -l || echo "0")
+MATCHES=$(find "$EVOLUTION_DIR/observations/" -name "*.md" -exec grep -l "$PATTERN" {} \; 2>/dev/null | wc -l || echo "0")
 
 echo "找到匹配：$MATCHES 个观察记录"
 echo ""
@@ -50,7 +50,7 @@ mkdir -p "$PROP_DIR"
 PROP_FILE="$PROP_DIR/${PROP_ID}.md"
 
 # 收集相关观察
-RELATED_OBS=$(grep -rl "$PATTERN" "$EVOLUTION_DIR/observations/" | head -5)
+RELATED_OBS=$(find "$EVOLUTION_DIR/observations/" -name "*.md" -exec grep -l "$PATTERN" {} \; | head -5)
 
 cat > "$PROP_FILE" << EOF
 # 📋 晋升提案
