@@ -26,6 +26,14 @@ botcoin_*
 mining_*
 dual_platform_*
 
+# 诊断和测试脚本（临时工具）
+scripts/tools/
+check_wallet*.py
+okx_api*.py
+test_*.py
+moltbook_*.py
+platform_health_check.py
+
 # 临时数据
 platform_health_history.json
 post_data.json
