@@ -54,17 +54,31 @@ BOOTSTRAP.md
 HEARTBEAT.md
 IDENTITY.md
 SOUL.md
-# AGENTS.md 现在需要版本控制（安全策略更新）
+USER.md
+TOOLS.md
 
 # 技能（排除个人技能，但允许项目技能）
 skills/
 !skills/safe-evolving-agent/
-USER.md
-TOOLS.md
 
 # Node 依赖
 node_modules/
 agentops-contracts/node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+.venv/
+*.pyc
+
+# 上传文件（临时）
+hairstyle_app/backend/uploads/
 
 # 日志
 *.log
@@ -77,3 +91,17 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+
+# 会话和状态
+*.session
+*.jsonl
+
+# OKX 配置（含 API Keys）
+.onchainos_config
+onchainos_*.json
+OKX_*.md
+POLYMARKET_*.md
+
+# 含敏感信息的文档
+*_SETUP.md
+*CLOB_*.md
