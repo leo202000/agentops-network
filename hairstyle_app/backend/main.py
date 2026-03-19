@@ -8,17 +8,19 @@
 - 批量生成
 """
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import List, Optional
 import requests
 import uuid
 import os
+import json
 from pathlib import Path
 
 # 加载 .env 文件
 env_path = Path(__file__).parent.parent.parent / ".env"  # 指向 /root/.openclaw/workspace/.env
 if env_path.exists():
-    with open(env_path, "r") as f:
+    with open(env_path, "r", encoding='utf-8') as f:
         for line in f:
             if "=" in line and not line.startswith("#"):
                 key, value = line.strip().split("=", 1)
@@ -119,21 +121,21 @@ async def upload_image(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/generate-hairstyle", response_model=GenerateResponse)
+@app.post("/generate-hairstyle")
 async def generate_hairstyle(request: HairstyleRequest):
     """生成单个发型"""
     result = call_jimeng_api(request.user_image, request.style, request.reference_image)
     
-    if result["success"]:
-        return GenerateResponse(
-            success=True,
-            result_image=result["image_url"]
-        )
-    else:
-        return GenerateResponse(
-            success=False,
-            error=result.get("error", "生成失败")
-        )
+    response_data = {
+        "success": result.get("success", False),
+        "result_image": result.get("image_url") if result.get("success") else None,
+        "error": result.get("error") if not result.get("success") else None
+    }
+    
+    return JSONResponse(
+        content=response_data,
+        media_type="application/json; charset=utf-8"
+    )
 
 @app.post("/generate-batch", response_model=BatchResponse)
 async def generate_batch(request: BatchRequest):
