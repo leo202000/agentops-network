@@ -195,27 +195,82 @@ class JimengClient:
 
 
 class HairstyleGenerator:
-    """发型生成器 - 整合业务逻辑"""
+    """发型生成器 - 整合业务逻辑 (v2 优化版)"""
     
-    # 支持的发型风格
+    # 支持的发型风格 - 详细描述版
     STYLES = {
-        "短发": "short bob cut hairstyle, clean and neat",
-        "卷发": "curly hairstyle, wavy and voluminous",
-        "长发": "long straight hairstyle, elegant and smooth",
-        "直发": "straight sleek hairstyle, professional look",
-        "马尾": "ponytail hairstyle, sporty and fresh",
-        "辫子": "braided hairstyle, intricate plait",
-        "波浪卷": "wavy curly hairstyle, beach waves",
-        "大波浪": "big wavy hairstyle, glamorous curls",
-        "中分": "middle part hairstyle, symmetrical style",
-        "斜刘海": "side bangs hairstyle, asymmetrical fringe",
-        "染发红": "red hair color, vibrant and bold",
-        "染现金": "blonde hair color, bright and stylish",
-        "染发棕": "brown hair color, natural and warm",
+        "短发": {
+            "prompt": "short bob cut hairstyle, clean and neat, professional look, above shoulder",
+            "negative": "long hair, waist length, 长发"
+        },
+        "卷发": {
+            "prompt": "curly hairstyle, wavy and voluminous, bouncy curls, textured hair",
+            "negative": "straight hair, 直发"
+        },
+        "长发": {
+            "prompt": "long straight hairstyle, elegant and smooth, flowing hair past shoulders, silky",
+            "negative": "short hair, bob cut, 短发"
+        },
+        "直发": {
+            "prompt": "straight sleek hairstyle, professional look, smooth and shiny",
+            "negative": "curly hair, wavy hair, 卷发"
+        },
+        "马尾": {
+            "prompt": "ponytail hairstyle, sporty and fresh, pulled back hair, high ponytail",
+            "negative": "loose hair, down hair, 披发"
+        },
+        "辫子": {
+            "prompt": "braided hairstyle, intricate plait, French braid, detailed braids",
+            "negative": "loose hair, unstyled, 披发"
+        },
+        "波浪卷": {
+            "prompt": "wavy curly hairstyle, beach waves, natural flowing waves, medium curls",
+            "negative": "straight hair, tight curls, 直发"
+        },
+        "大波浪": {
+            "prompt": "big wavy hairstyle, glamorous curls, voluminous waves, long flowing hair, elegant and sexy",
+            "negative": "short hair, bob cut, straight hair, small waves, 短发，直发"
+        },
+        "中分": {
+            "prompt": "middle part hairstyle, symmetrical style, center part, balanced look",
+            "negative": "side part, bangs, 斜刘海"
+        },
+        "斜刘海": {
+            "prompt": "side bangs hairstyle, asymmetrical fringe, side swept bangs",
+            "negative": "middle part, no bangs, 中分"
+        },
+        "染发红": {
+            "prompt": "red hair color, vibrant and bold, crimson red, fiery hair",
+            "negative": "black hair, brown hair, 黑发"
+        },
+        "染现金": {
+            "prompt": "blonde hair color, bright and stylish, platinum blonde, golden highlights",
+            "negative": "black hair, dark hair, 黑发"
+        },
+        "染发棕": {
+            "prompt": "brown hair color, natural and warm, chocolate brown, chestnut highlights",
+            "negative": "black hair, blonde hair, 黑发"
+        },
+        "及腰长发": {
+            "prompt": "waist-length long hair, ultra long flowing hair, silky smooth, elegant and graceful",
+            "negative": "short hair, bob cut, medium hair, shoulder length, 短发，齐肩发"
+        },
+        "羊毛卷": {
+            "prompt": "wool curly hair, tight curly coils, afro curls, voluminous and bouncy, textured",
+            "negative": "straight hair, wavy hair, long straight, 直发"
+        },
     }
     
-    def __init__(self, access_key: str, secret_key: str):
+    # 变换强度预设
+    TRANSFORM_PRESETS = {
+        "轻微": {"strength": 0.55, "cfg_scale": 8.0, "sample_steps": 35},
+        "中等": {"strength": 0.70, "cfg_scale": 9.0, "sample_steps": 40},
+        "彻底": {"strength": 0.85, "cfg_scale": 10.0, "sample_steps": 45},
+    }
+    
+    def __init__(self, access_key: str, secret_key: str, transform_mode: str = "中等"):
         self.client = JimengClient(access_key, secret_key)
+        self.transform_mode = transform_mode
         self.upload_dir = Path(__file__).parent / "uploads"
         self.upload_dir.mkdir(exist_ok=True)
     
@@ -251,17 +306,20 @@ class HairstyleGenerator:
         return url
     
     def generate(self, image_path: str, style: str, 
+                 transform_mode: str = None,
                  wait: bool = True, timeout: int = 180) -> dict:
         """
-        生成发型（图生图 - 角色特征保持）- 异步 API
+        生成发型（图生图 - 角色特征保持）- 异步 API v2
         
-        ⚠️ 根据官方文档:
-        - 异步 API：提交任务 → 查询结果
-        - Action: CVSync2AsyncSubmitTask / CVSync2AsyncGetResult
+        改进点:
+        - 支持负面提示词 (negative_prompt)
+        - 支持变换强度预设 (轻微/中等/彻底)
+        - 更详细的发型描述
         
         Args:
             image_path: 客户照片路径
             style: 发型风格
+            transform_mode: 变换强度 (轻微/中等/彻底)，默认使用初始化时的设置
             wait: 是否等待完成
             timeout: 超时时间（秒）
         
@@ -280,13 +338,27 @@ class HairstyleGenerator:
         # 上传图片（自动选择 TOS/OSS/base64）
         image_url = self.upload_image(image_path)
         
-        # 构建提示词 - 角色特征保持
-        style_prompt = self.STYLES[style]
+        # 获取发型配置
+        style_config = self.STYLES[style]
+        style_prompt = style_config["prompt"]
+        negative_prompt = style_config.get("negative")
+        
+        # 获取变换强度参数
+        mode = transform_mode or self.transform_mode
+        preset = self.TRANSFORM_PRESETS.get(mode, self.TRANSFORM_PRESETS["中等"])
+        strength = preset["strength"]
+        cfg_scale = preset["cfg_scale"]
+        sample_steps = preset["sample_steps"]
+        
+        # 构建提示词 - 角色特征保持 + 详细发型描述
         prompt = f"保持人物脸部完全一致，只改变发型为{style}，{style_prompt}, realistic photo, high quality, professional photography, natural lighting"
         
-        print(f"🎨 生成发型：{style}")
-        print(f"📝 提示词：{prompt[:80]}...")
+        print(f"🎨 生成发型：{style} [{mode}模式]")
+        print(f"📝 正向提示词：{prompt[:80]}...")
+        if negative_prompt:
+            print(f"🚫 负面提示词：{negative_prompt}")
         print(f"🔧 模型：seed3l_single_ip (图生图 - 角色特征保持)")
+        print(f"⚙️  参数：strength={strength}, cfg={cfg_scale}, steps={sample_steps}")
         print(f"🌐 图片：{'base64' if image_url.startswith('data:') else '公网 URL'}")
         
         # 步骤 1: 提交任务
@@ -294,7 +366,10 @@ class HairstyleGenerator:
         submit_result = self.client.submit_task(
             image_url=image_url,
             prompt=prompt,
-            strength=0.6,
+            strength=strength,
+            cfg_scale=cfg_scale,
+            sample_steps=sample_steps,
+            negative_prompt=negative_prompt,
             req_key="seed3l_single_ip"
         )
         

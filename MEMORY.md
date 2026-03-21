@@ -118,6 +118,38 @@
 
 ---
 
+## 🛡️ 防失忆系统 (2026-03-21)
+
+**创建原因**: 用户反馈"之前做过的事情经常会忘记，安装的技能会丢失"
+
+### 系统组件
+- **SESSION_STARTUP.md** - 会话启动检查清单 (每次会话前执行)
+- **MEMORY_UPDATE_GUIDE.md** - 记忆更新指南
+- **ANTI-FORGETTING-SYSTEM.md** - 完整方案文档
+- **skills/INSTALLED_SKILLS.md** - 技能清单 (71 个技能，自动更新)
+- **skills/CHANGELOG.md** - 技能变更日志
+- **skills/update-skills-list.sh** - 技能清单自动更新脚本
+- **start-session.sh** - 会话启动自动化脚本
+- **WEEKLY_REVIEW.md** - 每周审查清单
+- **memory/EVENT_TEMPLATE.md** - 事件记录模板
+
+### 核心机制
+1. **强制读取** - 会话启动时必须读取 MEMORY.md 和 INSTALLED_SKILLS.md
+2. **自动登记** - 安装技能后自动运行 update-skills-list.sh
+3. **及时更新** - 重要事件立即记录到 memory/events/
+4. **定期整理** - 每周审查记忆系统完整性
+
+### 效果指标 (目标)
+- 技能记录完整率：100%
+- 记忆更新延迟：<24h
+- 会话准备时间：<5min
+- 遗忘事件数量：<1/周
+
+### 相关文件
+- `/root/.openclaw/workspace/memory/working/anti-forgetting-lesson.md` - 学习记录
+
+---
+
 ## 🧠 Memory System V2 (2026-02-23)
 **重要**: AGENTS.md 已更新新的记忆读取规则
 
