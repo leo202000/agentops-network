@@ -367,9 +367,6 @@ class HairstyleGenerator:
             image_url=image_url,
             prompt=prompt,
             strength=strength,
-            cfg_scale=cfg_scale,
-            sample_steps=sample_steps,
-            negative_prompt=negative_prompt,
             req_key="seed3l_single_ip"
         )
         

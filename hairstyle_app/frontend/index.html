@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 发型生成 - 智能发型设计</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <h1>💇 AI 发型生成</h1>
+            <p class="subtitle">上传照片，选择发型，AI 为您设计完美发型</p>
+        </header>
+
+        <!-- 步骤 1: 上传照片 -->
+        <section class="section" id="step-1">
+            <h2>📸 步骤 1: 上传照片</h2>
+            <div class="upload-area" id="upload-area">
+                <div class="upload-placeholder">
+                    <div class="upload-icon">📷</div>
+                    <p>拖拽照片到此处，或点击上传</p>
+                    <p class="upload-hint">支持 JPG/PNG/WEBP，最大 10MB，可上传 1-5 张</p>
+                </div>
+                <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" multiple style="display: none;">
+            </div>
+            
+            <!-- 照片预览 -->
+            <div class="photo-preview" id="photo-preview"></div>
+            
+            <button class="btn btn-primary" id="next-step-1" disabled>下一步：选择发型</button>
+        </section>
+
+        <!-- 步骤 2: 选择发型 -->
+        <section class="section" id="step-2" style="display: none;">
+            <h2>💇 步骤 2: 选择发型</h2>
+            
+            <!-- 预设发型 -->
+            <div class="hairstyle-grid" id="hairstyle-grid">
+                <div class="hairstyle-card" data-style="大波浪">
+                    <div class="hairstyle-icon">🌊</div>
+                    <h3>大波浪</h3>
+                    <p>自然蓬松的大波浪发型</p>
+                </div>
+                <div class="hairstyle-card" data-style="羊毛卷">
+                    <div class="hairstyle-icon">🐑</div>
+                    <h3>羊毛卷</h3>
+                    <p>卷度明显的羊毛卷发型</p>
+                </div>
+                <div class="hairstyle-card" data-style="短发">
+                    <div class="hairstyle-icon">✂️</div>
+                    <h3>短发</h3>
+                    <p>清爽利落的短发</p>
+                </div>
+                <div class="hairstyle-card" data-style="长发">
+                    <div class="hairstyle-icon">💆</div>
+                    <h3>长发</h3>
+                    <p>柔顺的长直发</p>
+                </div>
+                <div class="hairstyle-card" data-style="马尾">
+                    <div class="hairstyle-icon">🎀</div>
+                    <h3>马尾</h3>
+                    <p>活力四射的马尾辫</p>
+                </div>
+                <div class="hairstyle-card" data-style="编发">
+                    <div class="hairstyle-icon">🌸</div>
+                    <h3>编发</h3>
+                    <p>精致的编发造型</p>
+                </div>
+            </div>
+            
+            <!-- 自定义描述 -->
+            <div class="custom-description">
+                <label for="custom-desc">或自定义描述：</label>
+                <textarea id="custom-desc" placeholder="描述您想要的发型变化，例如：'想要更蓬松的卷发，增加层次感'" rows="3"></textarea>
+            </div>
+            
+            <div class="step-actions">
+                <button class="btn btn-secondary" id="prev-step-2">上一步</button>
+                <button class="btn btn-primary" id="next-step-2" disabled>开始生成</button>
+            </div>
+        </section>
+
+        <!-- 步骤 3: 实时进度 -->
+        <section class="section" id="step-3" style="display: none;">
+            <h2>⏳ 生成进度</h2>
+            
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="progress-status">准备中...</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                
+                <div class="queue-info" id="queue-info" style="display: none;">
+                    <p>📊 队列位置：<span id="queue-position">0</span>/<span id="queue-total">0</span></p>
+                    <p>⏱️ 预计等待：<span id="wait-time">0</span>秒</p>
+                </div>
+            </div>
+            
+            <!-- 状态详情 -->
+            <div class="status-details" id="status-details">
+                <div class="status-item">
+                    <span class="status-icon">📤</span>
+                    <span class="status-text">提交任务</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-icon">⏳</span>
+                    <span class="status-text">排队中</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-icon">🤖</span>
+                    <span class="status-text">AI 生成中</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-icon">✅</span>
+                    <span class="status-text">生成完成</span>
+                </div>
+            </div>
+            
+            <!-- 连接状态 -->
+            <div class="connection-status" id="connection-status">
+                <span class="status-dot"></span>
+                <span class="status-text">连接中...</span>
+            </div>
+        </section>
+
+        <!-- 步骤 4: 预览确认 -->
+        <section class="section" id="step-4" style="display: none;">
+            <h2>✅ 生成完成</h2>
+            
+            <div class="result-container">
+                <div class="result-image">
+                    <img id="result-img" src="" alt="生成结果">
+                </div>
+                
+                <div class="result-actions">
+                    <button class="btn btn-primary" id="confirm-result">✅ 确认使用</button>
+                    <button class="btn btn-secondary" id="regenerate">🔄 重新生成</button>
+                    <button class="btn btn-download" id="download-result">📥 下载图片</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 步骤 5: 完成 -->
+        <section class="section" id="step-5" style="display: none;">
+            <h2>🎉 完成!</h2>
+            <div class="success-message">
+                <div class="success-icon">✅</div>
+                <p>您的发型已确认并保存</p>
+            </div>
+            
+            <div class="final-actions">
+                <button class="btn btn-primary" id="new-task">✨ 新建任务</button>
+                <button class="btn btn-download" id="download-final">📥 下载图片</button>
+            </div>
+        </section>
+
+        <!-- 错误提示 -->
+        <div class="error-toast" id="error-toast" style="display: none;">
+            <span class="error-icon">❌</span>
+            <span class="error-message" id="error-message"></span>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/task-manager.js"></script>
+    <script src="js/websocket.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
