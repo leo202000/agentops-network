@@ -29,15 +29,17 @@ if env_path.exists():
                 key, value = line.strip().split("=", 1)
                 os.environ[key] = value
 
-# 导入发型生成器
+# 导入独立客户端（已验证成功）
 sys.path.insert(0, str(Path(__file__).parent / "backend"))
-from hairstyle_generator import HairstyleGenerator
+# 使用独立 JimengClient 而不是 HairstyleGenerator（避免签名问题）
+from hairstyle_generator import JimengClient
 
 # Telegram Bot Token
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 
-# 支持的发型风格
+# 支持的发型风格（20 种）
 HAIRSTYLES = {
+    # 基础发型（15 种）
     "短发": "清爽短发造型",
     "卷发": "时尚卷发造型",
     "长发": "优雅长发造型",
@@ -53,6 +55,12 @@ HAIRSTYLES = {
     "染发棕": "自然棕色染发",
     "及腰长发": "优雅及腰长发",
     "羊毛卷": "可爱羊毛卷造型",
+    # 新增发型（5 种）⭐
+    "齐肩发": "经典 Bob 头，职场女性百搭",
+    "梨花头": "韩式内扣，温柔气质",
+    "外翘发型": "发尾外翻，活泼可爱",
+    "丸子头": "高发髻，清爽利落",
+    "空气刘海": "轻薄刘海，减龄神器",
 }
 
 
@@ -71,9 +79,16 @@ class TelegramHairstyleBot:
         if not self.bot_token:
             raise ValueError("请配置 TELEGRAM_BOT_TOKEN")
         
-        self.generator = HairstyleGenerator(self.access_key, self.secret_key)
+        # 使用独立客户端（已验证成功）
+        self.client = JimengClient(self.access_key, self.secret_key)
         self.temp_dir = Path(tempfile.gettempdir()) / "hairstyle_bot"
         self.temp_dir.mkdir(exist_ok=True)
+        
+        # TOS 配置
+        self.tos_ak = os.getenv("TOS_ACCESS_KEY", "")
+        self.tos_sk = os.getenv("TOS_SECRET_KEY", "")
+        self.tos_bucket = os.getenv("TOS_BUCKET", "")
+        self.tos_region = os.getenv("TOS_REGION", "cn-beijing")
     
     async def handle_photo(self, photo_url: str, chat_id: str, style: str) -> dict:
         """

@@ -82,16 +82,17 @@ class ImageUploader:
             )
         
         # TODO: 实现 TOS 上传
-        # 使用 volcengine tos-sdk
-        from volcengine.tos import TosClientV2
+        # 使用 tos-sdk
+        from tos import TosClientV2
         
         filename = f"hairstyle/{uuid.uuid4()}.jpg"
         
         try:
+            from tos import TosClientV2
             client = TosClientV2(
                 ak=self.tos_ak,
                 sk=self.tos_sk,
-                endpoint=f"https://{self.tos_bucket}.tos-cn-beijing.volces.com"
+                region='cn-beijing'
             )
             
             client.put_object_from_file(
@@ -177,6 +178,50 @@ def quick_upload(image_path: str) -> str:
         print("⚠️  未配置对象存储，使用 base64 模式")
         uploader = ImageUploader("base64")
         return uploader.upload(image_path)
+
+
+def delete_tos_object(tos_url: str) -> bool:
+    """
+    删除 TOS 上的对象
+    
+    Args:
+        tos_url: TOS 文件 URL
+        
+    Returns:
+        是否删除成功
+    """
+    try:
+        from tos import TosClientV2
+        
+        # 提取 object key
+        if tos_url.startswith("https://"):
+            tos_url = tos_url[8:]
+        parts = tos_url.split('/', 1)
+        object_key = parts[1] if len(parts) == 2 else tos_url
+        
+        # 提取 bucket 和 region
+        domain_part = tos_url.split('.')[0]
+        bucket = domain_part
+        
+        region = "cn-beijing"  # 默认
+        if "tos-cn-beijing" in tos_url:
+            region = "cn-beijing"
+        
+        # 初始化客户端
+        client = TosClientV2(
+            ak=os.getenv("TOS_ACCESS_KEY"),
+            sk=os.getenv("TOS_SECRET_KEY"),
+            region=region
+        )
+        
+        # 删除对象
+        client.delete_object(bucket=bucket, key=object_key)
+        print(f"✅ TOS 删除成功：{object_key}")
+        return True
+        
+    except Exception as e:
+        print(f"❌ TOS 删除失败：{e}")
+        return False
 
 
 if __name__ == "__main__":

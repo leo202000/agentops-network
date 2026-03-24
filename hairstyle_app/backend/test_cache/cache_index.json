@@ -1,0 +1,13 @@
+{
+  "0fd751a6850d6b4e9298a0003a068343": {
+    "created_at": "2026-03-23T06:47:42.519480",
+    "style": "测试发型",
+    "prompt": "测试提示词",
+    "result_file": "0fd751a6850d6b4e9298a0003a068343.jpg",
+    "result_url": "https://example.com/result.jpg",
+    "original_hash": "f45b05cd4de59f5c06b74b6bbd118786",
+    "metadata": {
+      "test": true
+    }
+  }
+}

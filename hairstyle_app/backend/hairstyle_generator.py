@@ -33,6 +33,10 @@ if env_path.exists():
                 key, value = line.strip().split("=", 1)
                 os.environ[key] = value
 
+# 导入压缩和缓存模块
+from image_compressor import compress_image
+from result_cache import ResultCache
+
 
 class JimengClient:
     """火山引擎即梦 AI 客户端 - 图生图 (seed3l_single_ip)
@@ -63,7 +67,7 @@ class JimengClient:
         """创建 HMAC-SHA256 签名（根据官方文档）"""
         date = timestamp[:8]
         
-        # 规范查询字符串
+        # 规范查询字符串（不要 URL 编码！）
         canonical_query = "&".join([f"{k}={v}" for k, v in sorted(query.items())])
         
         body_hash = self._sha256(body)
@@ -259,6 +263,27 @@ class HairstyleGenerator:
             "prompt": "wool curly hair, tight curly coils, afro curls, voluminous and bouncy, textured",
             "negative": "straight hair, wavy hair, long straight, 直发"
         },
+        # ===== 新增发型（2026-03-23）=====
+        "齐肩发": {
+            "prompt": "shoulder length bob hairstyle, classic and timeless, neat ends, versatile style, elegant collarbone length",
+            "negative": "very long hair, waist length, super short, 及腰长发，超短发"
+        },
+        "梨花头": {
+            "prompt": "pear blossom hairstyle, soft inward curls at ends, korean style, gentle and feminine, romantic look",
+            "negative": "outward curls, straight ends, 外翘，直发尾"
+        },
+        "外翘发型": {
+            "prompt": "outward flipped ends hairstyle, playful and cute, flirty style, modern look, bouncy tips",
+            "negative": "inward curls, straight ends, 内扣，直发尾"
+        },
+        "丸子头": {
+            "prompt": "high bun hairstyle, neat and tidy, elegant updo, summer style, clean and fresh, exposed neck",
+            "negative": "loose hair, down hair, 披发，散发"
+        },
+        "空气刘海": {
+            "prompt": "air bangs hairstyle, wispy and light bangs, korean style, soft forehead coverage, see-through fringe",
+            "negative": "heavy bangs, thick bangs, no bangs, 厚刘海，无刘海"
+        },
     }
     
     # 变换强度预设
@@ -268,11 +293,69 @@ class HairstyleGenerator:
         "彻底": {"strength": 0.85, "cfg_scale": 10.0, "sample_steps": 45},
     }
     
-    def __init__(self, access_key: str, secret_key: str, transform_mode: str = "中等"):
+    def __init__(
+        self,
+        access_key: str,
+        secret_key: str,
+        transform_mode: str = "中等",
+        enable_cache: bool = True,
+        enable_compression: bool = True,
+        cache_dir: str = "./cache",
+        cache_ttl_hours: int = 24,
+        compression_quality: int = 85
+    ):
+        """
+        初始化发型生成器
+        
+        Args:
+            access_key: API 访问密钥
+            secret_key: API 密钥
+            transform_mode: 变换强度（轻微/中等/彻底）
+            enable_cache: 是否启用缓存
+            enable_compression: 是否启用图片压缩
+            cache_dir: 缓存目录
+            cache_ttl_hours: 缓存有效期（小时）
+            compression_quality: 压缩质量（1-100）
+        """
         self.client = JimengClient(access_key, secret_key)
         self.transform_mode = transform_mode
+        
+        # 压缩和缓存配置
+        self.enable_cache = enable_cache
+        self.enable_compression = enable_compression
+        self.compression_quality = compression_quality
+        
+        # 初始化缓存
+        if enable_cache:
+            self.cache = ResultCache(
+                cache_dir=cache_dir,
+                ttl_hours=cache_ttl_hours,
+                max_size_gb=2.0  # 最大 2GB
+            )
+            print(f"💾 缓存已启用：{cache_dir} (TTL: {cache_ttl_hours}小时)")
+        else:
+            self.cache = None
+            print(f"⚠️  缓存已禁用")
+        
+        # 上传目录
         self.upload_dir = Path(__file__).parent / "uploads"
         self.upload_dir.mkdir(exist_ok=True)
+        
+        # 压缩目录
+        if enable_compression:
+            self.compressed_dir = Path(__file__).parent / "compressed"
+            self.compressed_dir.mkdir(exist_ok=True)
+            print(f"🗜️  压缩已启用：质量={compression_quality}")
+        
+        # 发型分析器（用于指定发型功能）
+        self.analyzer = None
+        if access_key:
+            try:
+                from hairstyle_analyzer import HairstyleAnalyzer
+                self.analyzer = HairstyleAnalyzer(access_key)
+                print(f"🎨 发型分析器已启用（支持指定发型）")
+            except Exception as e:
+                print(f"⚠️  发型分析器初始化失败：{e}")
     
     def upload_image(self, image_path: str) -> str:
         """
@@ -335,6 +418,28 @@ class HairstyleGenerator:
                 "available_styles": available
             }
         
+        # 📦 查询缓存（如果启用）
+        if self.enable_cache and self.cache:
+            style_config = self.STYLES[style]
+            style_prompt = style_config["prompt"]
+            negative_prompt = style_config.get("negative", "")
+            full_prompt = f"{style_prompt} {negative_prompt}"
+            
+            cache_result = self.cache.get(image_path, style, full_prompt)
+            
+            if cache_result['hit']:
+                print(f"✅ 使用缓存结果，跳过 API 调用")
+                return {
+                    "success": True,
+                    "cached": True,
+                    "image_urls": [cache_result['image_url']],
+                    "result_path": cache_result['result_path'],
+                    "cache_info": {
+                        'age_hours': cache_result.get('age_hours', 0),
+                        'style': cache_result.get('style', style)
+                    }
+                }
+        
         # 上传图片（自动选择 TOS/OSS/base64）
         image_url = self.upload_image(image_path)
         
@@ -370,13 +475,42 @@ class HairstyleGenerator:
             req_key="seed3l_single_ip"
         )
         
-        # 检查提交结果
-        if submit_result.get("code") != 10000:
+        # 检查提交结果（支持两种响应格式）
+        # 格式 1: {'code': 10000, 'data': {...}, 'message': 'Success'}
+        # 格式 2: {'ResponseMetadata': {'Error': {'Code': 'xxx', 'Message': 'xxx'}}}
+        
+        error_code = None
+        error_message = "提交失败"
+        request_id = None
+        
+        if submit_result and isinstance(submit_result, dict):
+            # 检查格式 1（成功响应）
+            if submit_result.get("code") == 10000:
+                pass  # 成功，继续
+            # 检查格式 2（错误响应）
+            elif "ResponseMetadata" in submit_result and "Error" in submit_result["ResponseMetadata"]:
+                error_meta = submit_result["ResponseMetadata"]["Error"]
+                error_code = error_meta.get("CodeN", error_meta.get("Code"))
+                error_message = error_meta.get("Message", "提交失败")
+                request_id = submit_result["ResponseMetadata"].get("RequestId")
+            # 其他错误格式
+            else:
+                error_code = submit_result.get("code")
+                error_message = submit_result.get("message", "提交失败")
+                request_id = submit_result.get("request_id")
+        else:
+            error_message = "提交失败（无响应）"
+        
+        if error_code is not None or (submit_result and not submit_result.get("code")):
+            print(f"❌ API 错误：{error_message}")
+            print(f"   错误代码：{error_code}")
+            print(f"   Request ID: {request_id}")
+            
             return {
                 "success": False,
-                "error": submit_result.get("message", "提交失败"),
-                "code": submit_result.get("code"),
-                "request_id": submit_result.get("request_id")
+                "error": error_message,
+                "code": error_code,
+                "request_id": request_id
             }
         
         task_id = submit_result["data"]["task_id"]
@@ -416,11 +550,75 @@ class HairstyleGenerator:
                 # ✅ 完成
                 image_urls = data.get("image_urls", [])
                 print(f"✅ 生成完成！")
+                
+                # 🗜️ 压缩图片（如果启用）
+                compressed_path = None
+                if self.enable_compression and image_urls:
+                    try:
+                        # 下载临时文件
+                        temp_path = self.upload_dir / f"temp_{task_id}.jpg"
+                        response = requests.get(image_urls[0], timeout=30)
+                        with open(temp_path, 'wb') as f:
+                            f.write(response.content)
+                        
+                        # 压缩
+                        compressed_path = self.compressed_dir / f"compressed_{task_id}.jpg"
+                        _, orig_size, comp_size = compress_image(
+                            str(temp_path),
+                            str(compressed_path),
+                            quality=self.compression_quality,
+                            max_size=1024
+                        )
+                        
+                        # 删除临时文件
+                        temp_path.unlink()
+                        
+                        # 上传压缩后的图片到 TOS（如果需要公网 URL）
+                        from image_uploader import quick_upload
+                        compressed_url = quick_upload(str(compressed_path))
+                        
+                        print(f"🗜️  图片已压缩：{orig_size/1024:.1f}KB → {comp_size/1024:.1f}KB")
+                        
+                        # 使用压缩后的 URL
+                        result_urls = [compressed_url]
+                        
+                    except Exception as e:
+                        print(f"⚠️  压缩失败：{e}，使用原始图片")
+                        result_urls = image_urls
+                else:
+                    result_urls = image_urls
+                
+                # 💾 保存到缓存（如果启用）
+                if self.enable_cache and self.cache:
+                    try:
+                        style_config = self.STYLES.get(style, {})
+                        full_prompt = f"{style_config.get('prompt', '')} {style_config.get('negative', '')}"
+                        
+                        # 如果有压缩文件，使用压缩文件路径
+                        cache_path = str(compressed_path) if compressed_path and compressed_path.exists() else image_path
+                        
+                        self.cache.set(
+                            image_path=image_path,
+                            style=style,
+                            prompt=full_prompt,
+                            result_url=result_urls[0],
+                            result_path=cache_path if compressed_path and compressed_path.exists() else image_path,
+                            metadata={
+                                'task_id': task_id,
+                                'compressed': compressed_path is not None,
+                                'model': 'seed3l_single_ip'
+                            }
+                        )
+                    except Exception as e:
+                        print(f"⚠️  缓存保存失败：{e}")
+                
                 return {
                     "success": True,
                     "task_id": task_id,
-                    "image_urls": image_urls,  # ✅ 数组格式
-                    "model": "seed3l_single_ip"
+                    "image_urls": result_urls,
+                    "model": "seed3l_single_ip",
+                    "cached": False,
+                    "compressed": compressed_path is not None
                 }
             elif status == "not_found":
                 return {
@@ -441,6 +639,84 @@ class HairstyleGenerator:
             "error": "超时",
             "task_id": task_id
         }
+    
+    def generate_custom_style(
+        self,
+        user_photo_path: str,
+        reference_photo_path: str,
+        wait: bool = True,
+        timeout: int = 180
+    ) -> dict:
+        """
+        生成客户指定发型（参考图同款）
+        
+        Args:
+            user_photo_path: 用户照片路径
+            reference_photo_path: 参考发型照片路径
+            wait: 是否等待完成
+            timeout: 超时时间（秒）
+        
+        Returns:
+            生成结果
+        """
+        if not self.analyzer:
+            return {
+                "success": False,
+                "error": "发型分析器未初始化"
+            }
+        
+        print("\n" + "=" * 80)
+        print("🎨 客户指定发型生成")
+        print("=" * 80)
+        
+        # 1. 上传参考图到 TOS
+        print("\n📤 上传参考图...")
+        ref_url = self.upload_image(reference_photo_path)
+        
+        # 2. 分析参考图发型
+        print("\n🔍 分析参考图发型...")
+        analysis = self.analyzer.analyze_hairstyle(ref_url)
+        
+        if not analysis.get('success'):
+            return {
+                "success": False,
+                "error": f"发型分析失败：{analysis.get('error')}"
+            }
+        
+        print(f"✅ 发型分析完成")
+        print(f"   描述：{analysis['description']}")
+        
+        # 3. 使用分析结果生成
+        print("\n💇 开始生成指定发型...")
+        
+        # 上传用户照片
+        user_url = self.upload_image(user_photo_path)
+        
+        # 调用 API 生成
+        try:
+            response = self.client.generate_image(
+                image_url=user_url,
+                prompt=analysis['prompt'],
+                wait=wait,
+                timeout=timeout
+            )
+            
+            if response.get('success'):
+                print("\n✅ 指定发型生成成功！")
+                response['analysis'] = analysis['description']
+                response['reference_url'] = ref_url
+            else:
+                print("\n❌ 指定发型生成失败")
+            
+            return response
+            
+        except Exception as e:
+            print(f"\n❌ 生成失败：{e}")
+            return {
+                "success": False,
+                "error": str(e),
+                "analysis": analysis['description']
+            }
     
     def generate_batch(self, image_path: str, styles: List[str],
                        delay: float = 2.0) -> List[dict]:

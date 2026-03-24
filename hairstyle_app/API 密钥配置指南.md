@@ -66,7 +66,7 @@ chmod 600 /root/.openclaw/workspace/.env
 **Access Key ID**:
 - 格式：`AKLT` 开头
 - 长度：约 64 字符
-- 示例：`AKLTxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+- 示例：`[REDACTED]`
 
 **Secret Access Key**:
 - 格式：普通字符串（不是 base64 编码）

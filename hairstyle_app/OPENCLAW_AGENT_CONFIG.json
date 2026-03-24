@@ -1,0 +1,90 @@
+{
+  "agentId": "hairstyle-bot",
+  "description": "AI 发型生成 Bot - 支持 Streaming 和 Telegram",
+  "model": "qwen3.5-plus",
+  "provider": "bailian",
+  "thinking": false,
+  "streaming": true,
+  "timeoutMs": 900000,
+  "maxTokens": 1024,
+  "messageChannel": "telegram",
+  
+  "telegram": {
+    "botToken": "8253344841:AAHDH5YkxM6ezE_imJMoERRGsE82CTS8-1E",
+    "chatId": 6598565346,
+    "streamTyping": true,
+    "maxMessageLength": 2000
+  },
+  
+  "tools": {
+    "exec": {
+      "enabled": true,
+      "async": true,
+      "maxRuntimeMs": 60000
+    },
+    "write": {
+      "enabled": true,
+      "async": true,
+      "maxRuntimeMs": 30000
+    },
+    "process": {
+      "enabled": true,
+      "async": true,
+      "maxRuntimeMs": 120000
+    }
+  },
+  
+  "memory": {
+    "enabled": true,
+    "persistence": true,
+    "maxEntries": 100
+  },
+  
+  "logging": {
+    "level": "info",
+    "console": true,
+    "file": "/root/.openclaw/logs/hairstyle-bot.log"
+  },
+  
+  "skills": [
+    "/gh_issues",
+    "/skill_creator",
+    "/video_frames",
+    "/openclaw_agent_optimize",
+    "/self_improvement"
+  ],
+  
+  "diagnostic": {
+    "lane": "main",
+    "queueSizeLimit": 5,
+    "retryOnFailover": true
+  },
+  
+  "promptConfig": {
+    "maxHistory": 20,
+    "chunkSize": 512,
+    "streamingChunk": true
+  },
+  
+  "hairstyle": {
+    "enabled": true,
+    "api": {
+      "provider": "doubao-seedream-4-5",
+      "apiKey": "e652320f-7102-49b6-9d4b-354c4002a6cb",
+      "timeoutMs": 180000
+    },
+    "storage": {
+      "provider": "tos",
+      "bucket": "hairfashon",
+      "region": "cn-beijing"
+    },
+    "cache": {
+      "enabled": true,
+      "ttl": 86400
+    },
+    "compression": {
+      "enabled": true,
+      "quality": 85
+    }
+  }
+}
